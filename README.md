@@ -12,7 +12,7 @@
 * Documentação do Software: https://docs.google.com/document/d/19aRfvLWchE0yAGaaRIOBQlGmvI5lAYdoj1PFkt1qqG4/edit?usp=sharing
 * Repositório do banco de dados: https://drive.google.com/file/d/1IhSbCew9IouKhktnRv7-Y2Vnguad4uBb/view?usp=sharing
 
-## Tecnologias e Linguagem Utilizadas
+## Tecnologias e Linguagem Utilizadas:
 
 * Linguagem de programação -> Java with Maven
 * SGBD -> Postgresql + pgAdmin 4

@@ -102,11 +102,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_cadastro">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\sfcvi\OneDrive\Documentos\NetBeansProjects\OficinaAgenda\Cadastroo.png"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_relatorio">
           <Properties>
@@ -128,11 +123,6 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\sfcvi\OneDrive\Documentos\NetBeansProjects\OficinaAgenda\relatorio.png"/>
-            </Property>
-          </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>

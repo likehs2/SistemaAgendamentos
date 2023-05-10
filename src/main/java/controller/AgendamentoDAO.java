@@ -144,21 +144,14 @@ public class AgendamentoDAO extends ModuloConexao{
             pst = conexao.prepareStatement(sql);
             //pst.setString(1, jTextField_idven.getText());
             pst.setString(1, agendamentotoedit.getNome());
-            System.out.println("1");
             pst.setString(2, agendamentotoedit.getHorario());
-            System.out.println("2");
             pst.setString(3, agendamentotoedit.getData());
-            System.out.println("3");
             pst.setString(4, agendamentotoedit.getPrioridade());
-            System.out.println("4");
             pst.setString(5, agendamentotoedit.getDescricao());
-            System.out.println("5");
             pst.setString(6, agendamentotoedit.getEstado());
-            System.out.println("6");
             pst.setString(7, agendamentotoedit.getTipo());
-            System.out.println("7");
+            
             pst.setInt(8, aux);
-            System.out.println("8");
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Alterado com sucesso");
         } catch (Exception e) {

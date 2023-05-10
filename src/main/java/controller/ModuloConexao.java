@@ -12,7 +12,7 @@ public class ModuloConexao{
         String driver = "org.postgresql.Driver";
         String url = "jdbc:postgresql://localhost:5432/oficina";
         String user = "postgres";
-        String password = "root";
+        String password = "admin";
         
         try{
             conexao = DriverManager.getConnection(url, user, password);

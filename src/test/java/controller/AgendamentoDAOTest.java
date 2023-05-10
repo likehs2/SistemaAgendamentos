@@ -4,7 +4,6 @@
  */
 package controller;
 
-import static org.mockito.Mockito.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,42 +11,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Agendamento;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 /**
  *
- * @author PICHAU
+ * @author Victor Hugo
  */
 public class AgendamentoDAOTest {
      
     private AgendamentoDAO agendamentoDAO;
-
-    @Mock
     private Connection conexao;
-            
-    @Mock
     private Agendamento agendamento;
-
-    @Mock
-    private PreparedStatement pst;
-
-    @Mock
-    private ResultSet rs;
-    
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        agendamentoDAO = new AgendamentoDAO();
-    }
     
     @Test
     public void testRead() throws SQLException {
-        AgendamentoDAO dao = new AgendamentoDAO();
-        List<Agendamento> agendamentos = dao.Read();
+        agendamentoDAO = new AgendamentoDAO();
+        List<Agendamento> agendamentos = agendamentoDAO.Read();
 
         assertNotNull(agendamentos);
         
@@ -60,6 +42,7 @@ public class AgendamentoDAOTest {
         assertEquals("Aberto".trim(), agendamento1.getEstado().trim());
         assertEquals("teste".trim(), agendamento1.getDescricao().trim());
         
+        //Verificação
         Agendamento agendamento2 = agendamentos.get(1);
         assertEquals("Profissional".trim(), agendamento2.getTipo().trim());
         assertEquals("Sanderson".trim(), agendamento2.getNome().trim());
@@ -70,71 +53,50 @@ public class AgendamentoDAOTest {
         assertEquals("Teste 2".trim(), agendamento2.getDescricao().trim());
     }
 
-//    @Test
-//    public void testRead() throws SQLException {
-//        agendamento = new Agendamento();
-//        List<Agendamento> agendamentosEsperados = new ArrayList<>();
-//        agendamento.setIDAgendamento(1);
-//        agendamento.setNome("Filomeno");
-//        agendamento.setData("18/02/2023");
-//        agendamento.setHorario("10:00");
-//        agendamento.setPrioridade("Urgente");
-//        agendamento.setEstado("Em andamento");
-//        agendamento.setDescricao("Lorem ipsum");
-//        agendamento.setTipo("Pessoal");
-//        
-//        agendamentosEsperados.add(agendamento);
-//
-//        when(conexao.prepareStatement(any(String.class))).thenReturn(pst);
-//        when(pst.executeQuery()).thenReturn(rs);
-//        when(rs.next()).thenReturn(true).thenReturn(false);
-//        when(rs.getInt("id_agendamento")).thenReturn(1);
-//        when(rs.getString("representante")).thenReturn("Filomeno");
-//        when(rs.getString("data")).thenReturn("18/02/2023");
-//        when(rs.getString("horario")).thenReturn("10:00");
-//        when(rs.getString("prioridade")).thenReturn("Urgente");
-//        when(rs.getString("estado")).thenReturn("Em andamento");
-//        when(rs.getString("descricao")).thenReturn("Lorem ipsum");
-//        when(rs.getString("id_tipo")).thenReturn("Pessoal");
-//
-//        List<Agendamento> agendamentos = agendamentoDAO.Read(conexao);
-//
-//        verify(conexao, times(1)).prepareStatement(any(String.class));
-//        verify(pst, times(1)).executeQuery();
-//        verify(rs, times(2)).next();
-//        verify(rs, times(1)).getInt("id_agendamento");
-//        verify(rs, times(1)).getString("representante");
-//        verify(rs, times(1)).getString("data");
-//        verify(rs, times(1)).getString("horario");
-//        verify(rs, times(1)).getString("prioridade");
-//        verify(rs, times(1)).getString("estado");
-//        verify(rs, times(1)).getString("descricao");
-//        verify(rs, times(1)).getString("id_tipo");
-//
-//        assertEquals(agendamentosEsperados, agendamentos);
-//    }
+    @Test
+    public void testCadastrarAgendamento() throws SQLException {
+        agendamentoDAO = new AgendamentoDAO();
+        conexao = agendamentoDAO.conector();
+        agendamento = new Agendamento();
+        agendamento.setTipo("Teste");
+        agendamento.setNome("Victor");
+        agendamento.setDescricao("teste testCadastrarAgedamento #05968741");
+        agendamento.setEstado("Aberto");
+        agendamento.setPrioridade("Media");
+        agendamento.setData("10/08/2024");
+        agendamento.setHorario("21:00");
 
-//    @Test
-//    public void testCadastrarAgendamento() throws SQLException {
-//
-//        String cmdsql = "insert into agendamento (id_tipo,representante,descricao,estado,prioridade,data,horario)VALUES(?,?,?,?,?,?,?);";
-//
-//        Connection conexao = mock(Connection.class);
-//
-//        when(agendamento.getTipo()).thenReturn("Tipo de Agendamento");
-//        when(agendamento.getNome()).thenReturn("Nome do Representante");
-//        when(agendamento.getDescricao()).thenReturn("Descrição do Agendamento");
-//        when(agendamento.getEstado()).thenReturn("Estado do Agendamento");
-//        when(agendamento.getPrioridade()).thenReturn("Prioridade do Agendamento");
-//        when(agendamento.getData()).thenReturn("Data do Agendamento");
-//        when(agendamento.getHorario()).thenReturn("Horário do Agendamento");
-//
-//        when(conexao.prepareStatement(cmdsql)).thenReturn(pst);
-//        when(pst.executeUpdate()).thenReturn(1);
-//
-//        agendamentoDAO.cadastrarAgendamento(agendamento, conexao);
-//
-//        verify(pst, times(1)).executeUpdate();
-//        verify(conexao, times(1)).prepareStatement(cmdsql);
-//    }
+        agendamentoDAO.cadastrarAgendamento(agendamento);
+
+        PreparedStatement pst = conexao.prepareStatement("select * from agendamento where id_tipo = ? and descricao = ?");
+        pst.setString(1, agendamento.getTipo());
+        pst.setString(2, agendamento.getDescricao());
+        ResultSet rs = pst.executeQuery();
+        Agendamento agendamentoAux = new Agendamento();    
+        while (rs.next()) {
+            agendamentoAux.setTipo(rs.getString("id_tipo"));
+            agendamentoAux.setNome(rs.getString("representante"));
+            agendamentoAux.setDescricao(rs.getString("descricao"));
+            agendamentoAux.setEstado(rs.getString("estado"));
+            agendamentoAux.setPrioridade(rs.getString("prioridade"));
+            agendamentoAux.setData(rs.getString("data"));
+            agendamentoAux.setHorario(rs.getString("horario"));
+        }
+
+        //Verificação
+        assertEquals(agendamento.getTipo().trim(), agendamentoAux.getTipo().trim());
+        assertEquals(agendamento.getNome().trim(), agendamentoAux.getNome().trim());
+        assertEquals(agendamento.getDescricao().trim(), agendamentoAux.getDescricao().trim());
+        assertEquals(agendamento.getEstado().trim(), agendamentoAux.getEstado().trim());
+        assertEquals(agendamento.getPrioridade().trim(), agendamentoAux.getPrioridade().trim());
+        assertEquals(agendamento.getData().trim(), agendamentoAux.getData().trim());
+        assertEquals(agendamento.getHorario().trim(), agendamentoAux.getHorario().trim());
+        
+        //Deleção de agendamento de teste
+        pst = conexao.prepareStatement("delete from agendamento where id_tipo = ? and descricao = ?");
+        pst.setString(1, agendamento.getTipo());
+        pst.setString(2, agendamento.getDescricao());
+        pst.executeUpdate();
+    }
 }
+

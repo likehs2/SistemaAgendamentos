@@ -18,14 +18,15 @@ import model.Agendamento;
  *
  * 
  */
-public class AgendamentoDAO {
+public class AgendamentoDAO extends ModuloConexao{
 
+    Connection conexao = conector();
     protected Agendamento agendamento = new Agendamento();
 
     PreparedStatement pst;
     ResultSet rs;
 
-    public void cadastrarAgendamento(Agendamento agendamento, Connection conexao) {
+    public void cadastrarAgendamento(Agendamento agendamento) {
         String sql = "insert into agendamento (id_tipo,representante,descricao,estado,prioridade,data,horario)VALUES(?,?,?,?,?,?,?);";
         try {
             pst = conexao.prepareStatement(sql);
@@ -39,13 +40,14 @@ public class AgendamentoDAO {
             pst.setString(6, agendamento.getData());
             pst.setString(7, agendamento.getHorario());
             pst.executeUpdate();
+            pst.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    public List<Agendamento> Read(Connection conexao) {
+    public List<Agendamento> Read() {
         try {
             List<Agendamento> agendamento1 = new ArrayList<>();
 
@@ -78,7 +80,7 @@ public class AgendamentoDAO {
 
 
 
-    public List<Agendamento> Consultacli(Connection conexao, int IDagendamento) {
+    public List<Agendamento> Consultacli(int IDagendamento) {
         try {
             List<Agendamento> agendamento1 = new ArrayList<>();
             String cmdsql = "select * from agendamento where id_agendamento = ?";
@@ -108,7 +110,7 @@ public class AgendamentoDAO {
 
 
 
-    public List<Agendamento> ConsultacliNome(Connection conexao, String Buscar) {
+    public List<Agendamento> ConsultacliNome(String Buscar) {
         try {
             List<Agendamento> agendamento1 = new ArrayList<>();
             String cmdsql = "select * from agendamento where LOWER(data) LIKE LOWER(?)";
@@ -136,7 +138,7 @@ public class AgendamentoDAO {
         }
     }
 
-    public void alterarAgendamento(Connection conexao, Agendamento agendamentotoedit, int aux) {
+    public void alterarAgendamento(Agendamento agendamentotoedit, int aux) {
         String sql = "update agendamento set representante = ?, horario = ?, data = ?, prioridade = ?, descricao = ?, estado = ?, id_tipo = ?  where id_agendamento = ?";
         try {
             pst = conexao.prepareStatement(sql);

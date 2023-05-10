@@ -203,7 +203,7 @@ public class JanelaRelatorio extends javax.swing.JFrame {
 
     public void lerAgendamento() {
         AgendamentoDAO agendamentodao1 = new AgendamentoDAO();
-        List<Agendamento> agendamentoU = agendamentodao1.Read(conexao);
+        List<Agendamento> agendamentoU = agendamentodao1.Read();
         DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
         modelo.setNumRows(0);
         for (Agendamento c : agendamentoU) {
@@ -224,7 +224,7 @@ public class JanelaRelatorio extends javax.swing.JFrame {
         AgendamentoDAO agendamentodao1 = new AgendamentoDAO();
         try {
             int IDagendamento = Integer.parseInt(jTextField_idrelatorio.getText());
-            List<Agendamento> agendamentoU = agendamentodao1.Consultacli(conexao, IDagendamento);
+            List<Agendamento> agendamentoU = agendamentodao1.Consultacli(IDagendamento);
             DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
             modelo.setNumRows(0);
             for (Agendamento c : agendamentoU) {
@@ -248,7 +248,7 @@ public class JanelaRelatorio extends javax.swing.JFrame {
         AgendamentoDAO controllerven1 = new AgendamentoDAO();
         try {
             String Buscar = jTextField_datarelatorio.getText();
-            List<Agendamento> agendamentoU = controllerven1.ConsultacliNome(conexao, Buscar);
+            List<Agendamento> agendamentoU = controllerven1.ConsultacliNome(Buscar);
             DefaultTableModel modelo = (DefaultTableModel) jTable_relatorio.getModel();
             modelo.setNumRows(0);
             for (Agendamento c : agendamentoU) {

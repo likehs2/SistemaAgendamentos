@@ -15,7 +15,6 @@ public class ModuloConexao{
         String password = "root";
         
         try{
-            System.out.println("Conectou");
             conexao = DriverManager.getConnection(url, user, password);
             return conexao;
         } catch (Exception e) {

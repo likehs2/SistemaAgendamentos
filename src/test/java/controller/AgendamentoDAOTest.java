@@ -46,9 +46,8 @@ public class AgendamentoDAOTest {
     
     @Test
     public void testRead() throws SQLException {
-        Connection conexao = ModuloConexao.conector();
         AgendamentoDAO dao = new AgendamentoDAO();
-        List<Agendamento> agendamentos = dao.Read(conexao);
+        List<Agendamento> agendamentos = dao.Read();
 
         assertNotNull(agendamentos);
         

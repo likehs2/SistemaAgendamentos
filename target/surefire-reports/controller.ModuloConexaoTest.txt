@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: test.ModuloConexaoTest
+Test set: controller.ModuloConexaoTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.315 s - in test.ModuloConexaoTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.31 s - in controller.ModuloConexaoTest

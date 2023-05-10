@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * 
@@ -139,5 +141,36 @@ public class Agendamento implements java.io.Serializable{
      * @return the IDCliente
      */
 
+    public Agendamento() {
+        
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agendamento obj = (Agendamento) o;
+        return Objects.equals(IDAgendamento, obj.IDAgendamento) &&
+            Objects.equals(Tipo, obj.Tipo) &&
+            Objects.equals(Nome, obj.Nome) &&
+            Objects.equals(Data, obj.Data) &&
+            Objects.equals(Horario, obj.Horario) &&
+            Objects.equals(Prioridade, obj.Prioridade) &&
+            Objects.equals(Estado, obj.Estado) &&
+            Objects.equals(Descricao, obj.Descricao);
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.Nome);
+        hash = 23 * hash + Objects.hashCode(this.Descricao);
+        hash = 23 * hash + Objects.hashCode(this.Horario);
+        hash = 23 * hash + this.IDAgendamento;
+        hash = 23 * hash + Objects.hashCode(this.Data);
+        hash = 23 * hash + Objects.hashCode(this.Estado);
+        hash = 23 * hash + Objects.hashCode(this.Prioridade);
+        hash = 23 * hash + Objects.hashCode(this.Tipo);
+        return hash;
+    }
 }

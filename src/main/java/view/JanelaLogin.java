@@ -145,8 +145,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, jTextField_login.getText());
-            pst.setString(2, jTextField_senha
-                    .getText());
+            pst.setString(2, jTextField_senha.getText());
 
             rs = pst.executeQuery();
 

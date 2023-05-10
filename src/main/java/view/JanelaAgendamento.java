@@ -408,7 +408,7 @@ public class JanelaAgendamento extends javax.swing.JFrame {
     private void jButton_excluircliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_excluircliMouseClicked
         try {
             int IDAgendamento = Integer.parseInt(jTextField_id.getText());
-            agendamentoDAO.excluiAgendamento(conexao, IDAgendamento);
+            agendamentoDAO.excluiAgendamento(IDAgendamento);
 
         } catch (NumberFormatException n) {
             JOptionPane.showMessageDialog(null, "ERRO AO EXCLUIR:" + n);

@@ -84,6 +84,8 @@ public class AgendamentoDAOTest {
             agendamentoAux.setData(rs.getString("data"));
             agendamentoAux.setHorario(rs.getString("horario"));
         }
+        
+        idAgendamento = agendamentoAux.getIDAgendamento();
 
         //Verificação
         assertEquals(agendamento.getTipo().trim(), agendamentoAux.getTipo().trim());
@@ -96,7 +98,7 @@ public class AgendamentoDAOTest {
         
         //Deleção de agendamento de teste
         pst = conexao.prepareStatement("delete from agendamento where id_agendamento = ?");
-        pst.setInt(1, agendamentoAux.getIDAgendamento());
+        pst.setInt(1, idAgendamento);
         pst.executeUpdate();
     }
     
@@ -131,11 +133,12 @@ public class AgendamentoDAOTest {
             agendamentoAux.setHorario(rs.getString("horario"));
         }
         
+        idAgendamento = agendamentoAux.getIDAgendamento();
+        
         //Chamada do método Consultacli
-        List<Agendamento> agendamentoTest = agendamentoDAO.Consultacli(agendamentoAux.getIDAgendamento());
+        List<Agendamento> agendamentoTest = agendamentoDAO.Consultacli(idAgendamento);
         
         assertNotEquals(0, agendamentoTest.get(0).getIDAgendamento());
-        idAgendamento = agendamentoTest.get(0).getIDAgendamento();
         
         //Verificação
         assertEquals(agendamento.getTipo().trim(), agendamentoTest.get(0).getTipo().trim());
@@ -148,7 +151,7 @@ public class AgendamentoDAOTest {
         
         //Deleção de agendamento de teste
         pst = conexao.prepareStatement("delete from agendamento where id_agendamento = ?");
-        pst.setInt(1, agendamentoTest.get(0).getIDAgendamento());
+        pst.setInt(1, idAgendamento);
         pst.executeUpdate();
     }
     
@@ -200,9 +203,118 @@ public class AgendamentoDAOTest {
         
         //Deleção de agendamento de teste
         pst = conexao.prepareStatement("delete from agendamento where id_agendamento = ?");
-        pst.setInt(1, agendamentoTest.get(0).getIDAgendamento());
+        pst.setInt(1, idAgendamento);
         pst.executeUpdate();
     }
     
+    @Test
+    public void testAlterarAgendamento() throws Exception {
+        agendamentoDAO = new AgendamentoDAO();
+        conexao = agendamentoDAO.conector();
+        agendamento = new Agendamento();
+        agendamento.setTipo("Teste");
+        agendamento.setNome("Victor");
+        agendamento.setDescricao("teste testAlterarAgendamento #69812430");
+        agendamento.setEstado("Aberto");
+        agendamento.setPrioridade("Media");
+        agendamento.setData("05/03/2023");
+        agendamento.setHorario("11:45");
+        agendamentoDAO.cadastrarAgendamento(agendamento);
+        
+        PreparedStatement pst = conexao.prepareStatement("select * from agendamento where id_tipo = ? and descricao = ?");
+        pst.setString(1, agendamento.getTipo());
+        pst.setString(2, agendamento.getDescricao());
+        ResultSet rs = pst.executeQuery();
+        
+        Agendamento agendamentoAux = new Agendamento(); 
+        while (rs.next()) {
+            agendamentoAux.setIDAgendamento(rs.getInt("id_agendamento"));
+            agendamentoAux.setTipo(rs.getString("id_tipo"));
+            agendamentoAux.setNome(rs.getString("representante"));
+            agendamentoAux.setDescricao(rs.getString("descricao"));
+            agendamentoAux.setEstado(rs.getString("estado"));
+            agendamentoAux.setPrioridade(rs.getString("prioridade"));
+            agendamentoAux.setData(rs.getString("data"));
+            agendamentoAux.setHorario(rs.getString("horario"));
+        }
+        
+        //Criação de novo objeto p/ alteração
+        Agendamento novoAgendamento = new Agendamento();
+        novoAgendamento.setTipo("NovoTeste");
+        novoAgendamento.setNome("NovoVictor");
+        novoAgendamento.setDescricao("teste testAlterarAgendamento #69812430");
+        novoAgendamento.setEstado("Aberto");
+        novoAgendamento.setPrioridade("Media");
+        novoAgendamento.setData("05/03/2023");
+        novoAgendamento.setHorario("11:45");
+        
+        idAgendamento = agendamentoAux.getIDAgendamento();
+        
+        //Chamada do método alterarAgendamento
+        agendamentoDAO.alterarAgendamento(novoAgendamento, idAgendamento);
+        
+        assertNotEquals(null, agendamentoAux.getData());
+        
+        
+        List<Agendamento> agendamentoAtualizado = agendamentoDAO.Consultacli(idAgendamento);
+        
+        //Verificação
+        assertEquals(novoAgendamento.getTipo().trim(), agendamentoAtualizado.get(0).getTipo().trim());
+        assertEquals(novoAgendamento.getNome().trim(), agendamentoAtualizado.get(0).getNome().trim());
+        assertEquals(novoAgendamento.getDescricao().trim(), agendamentoAtualizado.get(0).getDescricao().trim());
+        assertEquals(novoAgendamento.getEstado().trim(), agendamentoAtualizado.get(0).getEstado().trim());
+        assertEquals(novoAgendamento.getPrioridade().trim(), agendamentoAtualizado.get(0).getPrioridade().trim());
+        assertEquals(novoAgendamento.getData().trim(), agendamentoAtualizado.get(0).getData().trim());
+        assertEquals(novoAgendamento.getHorario().trim(), agendamentoAtualizado.get(0).getHorario().trim());
+        
+        //Deleção de agendamento de teste
+        pst = conexao.prepareStatement("delete from agendamento where id_agendamento = ?");
+        pst.setInt(1, idAgendamento);
+        pst.executeUpdate();
+    }
+    
+    @Test
+    public void testExcluiAgendamento() throws Exception {
+        agendamentoDAO = new AgendamentoDAO();
+        conexao = agendamentoDAO.conector();
+        agendamento = new Agendamento();
+        agendamento.setTipo("Teste");
+        agendamento.setNome("Victor");
+        agendamento.setDescricao("teste testExcluiAgendamento #71269348");
+        agendamento.setEstado("Aberto");
+        agendamento.setPrioridade("Media");
+        agendamento.setData("05/03/2023");
+        agendamento.setHorario("11:45");
+        agendamentoDAO.cadastrarAgendamento(agendamento);
+        
+        PreparedStatement pst = conexao.prepareStatement("select * from agendamento where id_tipo = ? and descricao = ?");
+        pst.setString(1, agendamento.getTipo());
+        pst.setString(2, agendamento.getDescricao());
+        ResultSet rs = pst.executeQuery();
+        
+        Agendamento agendamentoAux = new Agendamento(); 
+        while (rs.next()) {
+            agendamentoAux.setIDAgendamento(rs.getInt("id_agendamento"));
+            agendamentoAux.setTipo(rs.getString("id_tipo"));
+            agendamentoAux.setNome(rs.getString("representante"));
+            agendamentoAux.setDescricao(rs.getString("descricao"));
+            agendamentoAux.setEstado(rs.getString("estado"));
+            agendamentoAux.setPrioridade(rs.getString("prioridade"));
+            agendamentoAux.setData(rs.getString("data"));
+            agendamentoAux.setHorario(rs.getString("horario"));
+        }
+        
+        idAgendamento = agendamentoAux.getIDAgendamento();
+        
+        agendamentoDAO.excluiAgendamento(idAgendamento);
+        
+        pst = conexao.prepareStatement("select * from agendamento where id_agendamento = ?");
+        pst.setInt(1, idAgendamento);
+        rs = pst.executeQuery();
+        
+        //Verificação(se o agendamento foi excluido)
+        assertEquals(false, rs.next());
+        
+    }
 }
 

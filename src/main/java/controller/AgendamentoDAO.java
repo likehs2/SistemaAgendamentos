@@ -159,7 +159,7 @@ public class AgendamentoDAO extends ModuloConexao{
         }
     }
 
-    public void excluiAgendamento(Connection conexao, int IDAgendamento) {
+    public void excluiAgendamento(int IDAgendamento) {
         String sql = "delete from agendamento where id_agendamento = ?";
         try {
             pst = conexao.prepareStatement(sql);

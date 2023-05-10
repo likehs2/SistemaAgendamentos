@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: controller.AgendamentoDAOTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.339 s <<< FAILURE! - in controller.AgendamentoDAOTest
-testConsultacli  Time elapsed: 0.333 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <07/01/2024> but was: <Victor>
-	at controller.AgendamentoDAOTest.testConsultacli(AgendamentoDAOTest.java:146)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.236 s - in controller.AgendamentoDAOTest

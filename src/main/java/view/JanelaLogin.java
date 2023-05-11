@@ -137,15 +137,15 @@ public class JanelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_entrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_entrarMouseClicked
-        logar();        // TODO add your handling code here:
+        logar(jTextField_login.getText(), jTextField_senha.getText());        // TODO add your handling code here:
     }//GEN-LAST:event_jButton_entrarMouseClicked
 
-    public void logar() {
+    public void logar(String usuario, String senha) {
         String sql = "Select * from usuario where usuario = ? and  senha = ?";
         try {
             pst = conexao.prepareStatement(sql);
-            pst.setString(1, jTextField_login.getText());
-            pst.setString(2, jTextField_senha.getText());
+            pst.setString(1, usuario);
+            pst.setString(2, senha);
 
             rs = pst.executeQuery();
 

@@ -15,11 +15,16 @@ public class JanelaLoginTest {
     JanelaLogin obj = new JanelaLogin();
  
     @Test
-    public void logarTest() {
-        try {
-            obj.logar("Tom", "Tom");
-        } catch(Exception e) {
-            System.out.println("Test Failed");
-        }     
+    public void logarTestTrue() {
+        String response = obj.logar("Tom", "Tom"); 
+        
+        assertEquals("login realizado com sucesso", response);
+    }
+    
+    @Test
+    public void logarTestFalse() {
+        String response = obj.logar("Tom", "SenhaErrada");
+        
+        assertEquals("usuario e/ou senha invalido", response);
     }
 }

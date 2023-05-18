@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.SpringLayout;
 
 /**
  *
@@ -140,7 +141,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         logar(jTextField_login.getText(), jTextField_senha.getText());        // TODO add your handling code here:
     }//GEN-LAST:event_jButton_entrarMouseClicked
 
-    public void logar(String usuario, String senha) {
+    public String logar(String usuario, String senha) {
         String sql = "Select * from usuario where usuario = ? and  senha = ?";
         try {
             pst = conexao.prepareStatement(sql);
@@ -154,11 +155,15 @@ public class JanelaLogin extends javax.swing.JFrame {
                 menu.setVisible(true);
                 this.dispose();
                 conexao.close();
+                return "login realizado com sucesso";
             } else {
-                JOptionPane.showMessageDialog(null, "usuario e/ou senha invalido");
+                String message = "usuario e/ou senha invalido";
+                JOptionPane.showMessageDialog(null, message);
+                return message;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+            return "Error";
         }
     }
 
